@@ -1,2 +1,2 @@
 # INF029-LuanGuimar-es
-Repository for a college course
+Repositório para a matéria de Laboratório de Programação
