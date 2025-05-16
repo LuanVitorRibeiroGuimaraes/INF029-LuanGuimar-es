@@ -11,17 +11,17 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Luan Vitor Ribeiro Guimarães
+//  email: luanvitor.mat@outlook.com
+//  Matrícula: 20242160024
+//  Semestre: 2
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021
 
 // #################################################
-#ifndef TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
-#define TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
+#ifndef LuanGuimaraes20242160024_H
+#define TLuanGuimaraes20242160024_H
 
 typedef struct DQ
 {
