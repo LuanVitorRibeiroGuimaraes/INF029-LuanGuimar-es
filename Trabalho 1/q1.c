@@ -14,8 +14,9 @@ int leapYear(int year)
 //0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 // i = 0, i = 3, i = 6
 
-int validateData(char date[])
+int validateData(char date[11])
 {
+
     char sDia[3];
     char sMes[3];
     char sAno[5];
@@ -48,24 +49,28 @@ int validateData(char date[])
     int mes = atoi(sMes);
     int ano = atoi(sAno);
 
-    if (dia > 0 || dia <= 30 && (mes == 4 || mes == 6 || mes == 9 || mes == 11))
-        return 1;
+    if (dia > 0 && dia <= 30 && (mes == 4 || mes == 6 || mes == 9 || mes == 11)) return 1;
 
-    if (dia > 0 || dia <= 31 && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || sMes == 8 || mes == 10 || mes == 12)) return 1;
+    if (dia > 0 && dia <= 31 && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)) return 1;
 
-    if (leapYear(sAno) == 1)
+    if (leapYear(ano) == 1)
     {
-        if (dia > 0 || dia <= 29 && mes == 2) return 1;
-        return 0;
+        if (dia > 0 && dia <= 29 && (mes == 2)) return 1;
     }
         
-    if (leapYear(sAno) == 0)
+    if (leapYear(ano) == 0)
     {
-        if (dia > 0 || dia <= 28 && mes == 2) return 1;
-        return 0;
+        if (dia > 0 && dia <= 28 && (mes == 2)) return 1;
     }
         
-
-    
     return 0;
 }
+
+    int main()
+    {
+        char date[] = {"30/02/2025"};
+
+        (validateData(date) == 1) ? printf("\nData valida\n") : printf("\nData invalida\n");
+
+        return 0;
+    }
