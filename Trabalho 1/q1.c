@@ -49,6 +49,8 @@ int validateData(char date[11])
     int mes = atoi(sMes);
     int ano = atoi(sAno);
 
+    if (sAno < 100) ano += 2000;
+
     if (dia > 0 && dia <= 30 && (mes == 4 || mes == 6 || mes == 9 || mes == 11)) return 1;
 
     if (dia > 0 && dia <= 31 && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)) return 1;

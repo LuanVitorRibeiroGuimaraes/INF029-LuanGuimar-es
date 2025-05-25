@@ -2,75 +2,62 @@
 #include <stdlib.h>
 #include <string.h>
 
-// char phrase[250], char *word;
-
-
-//percorrer toda a string - OK
-//encontrar a primeira letra de "text" em strFormated - OK
-//se encontrar percorrer pela string o tamanho "text" - OK
-//começar a buscar a partir da segunda posição do array -> utilizar uma variável que reinicia caso a segunda letra n dê match
-//se não encontar a letra seguinte, parar o loop e voltar a variável para iniciar de 1 (segunda posição do array)
-
-int findString()
+void findText()
 {
-    char phrase[250];
-    char text[30];
-    
-    strcpy(phrase, "Olá, o mundo é muito grande. Tem muitas pessoas, e muitos problemas");
-    strcpy(text, "mui");
-    
+    char strTexto[250];
+    char strBusca[50];
+    // int posicpoes[30];
+
+    strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
+    strcpy(strBusca, "rato");
+
     char strFormated[250];
 
-    int words = 0;
-    int x, i, j, sizeWord, sizePhrase, find;
+    int sizeTexto = strlen(strTexto), sizeBusca = strlen(strBusca), sizeFormated;
+    int j, find, words = 0;
 
-    for (int i = 0; i < strlen(phrase); i++)
+    for (int i = 0; i < sizeTexto; i++)
     {
-        if (phrase[i] == -61)
+        if(strTexto[i] == -61)
         {
-            strFormated[i] = ""; 
+            strFormated[i] == " ";
         }
         else
         {
-            strFormated[i] = phrase[i];
+            strFormated[i] = strTexto[i];
         }
     }
 
-    sizePhrase = strlen(strFormated);
-    sizeWord = strlen(text);
+    printf("\n String: %s", strFormated);
 
-    printf("\noriginal: %s", strFormated);
+    sizeFormated = strlen(strFormated);
 
-    for (i = 0; i < sizePhrase; i++)
+    for (int i = 0; i < sizeFormated; i++)
     {
-        j = 1;
-        find = 0;
+        j = 1; //pega sempre a primeira posição (reinicia sempre para garantir isso)
+        find = 0; //considera que ainda n encontrou nada
 
-        if (text[0] == strFormated[i])
+        if (strBusca[0] == strTexto[i]) //compara as 2 primeiras palabras de ambos
         {
-            for (x = i+1; x < sizePhrase; x++)
+            for (int x = i+1; x < sizeFormated; x++) //inicia da posição seguinte a primeira letra que foi encontrada e percorre todo o resto da string
             {
-                if (text[j] == strFormated[x])
+                if (strBusca[j] == strTexto[x]) //se as letras forem batendo, basta incrementar para ver a letra seguinte
                 {
                     j++;
-                } 
-                else
-                {
-                    break;
                 }
+                else break;
             }
-            if (j == sizeWord) find = 1;
-
-            if (find) words++;
         }
+
+        if (j == sizeBusca) find = 1; //se o incrementador j for do mesmo size do tamanho 
+
+        if (find) words++; // se encontrar, incrementa a quantidade de palavras
     }
-    printf("\npalavras encontradas: %d", words);
-    return 1;
+
+    printf("\nVezes encontrada no texto: %d", words);
 }
 
 int main()
 {
-    findString();
-
-    return 0;
+    findText();
 }
