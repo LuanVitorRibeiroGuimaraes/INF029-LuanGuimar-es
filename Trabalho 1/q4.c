@@ -2,62 +2,86 @@
 #include <stdlib.h>
 #include <string.h>
 
-void findText()
+int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    char strTexto[250];
-    char strBusca[50];
-    // int posicpoes[30];
-
-    strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
-    strcpy(strBusca, "rato");
+   // strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
+   // strcpy(strBusca, "rato");
 
     char strFormated[250];
-
     int sizeTexto = strlen(strTexto), sizeBusca = strlen(strBusca), sizeFormated;
-    int j, find, words = 0;
+    int s, k, j, find, qtdOcorrencias, firstPosition;
 
+    qtdOcorrencias = 0;
+
+    s = 0;
     for (int i = 0; i < sizeTexto; i++)
     {
-        if(strTexto[i] == -61)
+        if(strTexto[i] == 0xc3) 
         {
-            strFormated[i] == " ";
+            i++;
         }
         else
         {
-            strFormated[i] = strTexto[i];
+            strFormated[s] = strTexto[i];
+            s++; 
         }
     }
-
-    printf("\n String: %s", strFormated);
+    strFormated[s] = '\0';
 
     sizeFormated = strlen(strFormated);
 
+    k = 0;
+
     for (int i = 0; i < sizeFormated; i++)
     {
-        j = 1; //pega sempre a primeira posição (reinicia sempre para garantir isso)
-        find = 0; //considera que ainda n encontrou nada
+        j = 1;
+        find = 0;
 
-        if (strBusca[0] == strTexto[i]) //compara as 2 primeiras palabras de ambos
+        if (strBusca[0] == strFormated[i])
         {
-            for (int x = i+1; x < sizeFormated; x++) //inicia da posição seguinte a primeira letra que foi encontrada e percorre todo o resto da string
+            firstPosition = i;
+            
+            for (int x = i+1; x < sizeFormated; x++)
             {
-                if (strBusca[j] == strTexto[x]) //se as letras forem batendo, basta incrementar para ver a letra seguinte
+                if (strBusca[j] == strFormated[x])
                 {
                     j++;
+                    if (j == sizeBusca)
+                    {
+                        posicoes[k] = firstPosition;
+                        k++;
+                        posicoes[k] = x;
+                        k++;
+                    }
                 }
                 else break;
             }
         }
 
-        if (j == sizeBusca) find = 1; //se o incrementador j for do mesmo size do tamanho 
-
-        if (find) words++; // se encontrar, incrementa a quantidade de palavras
+        if (j == sizeBusca) find = 1;
+        if (find) qtdOcorrencias++;
     }
 
-    printf("\nVezes encontrada no texto: %d", words);
+    return qtdOcorrencias;
 }
 
 int main()
 {
-    findText();
+    char strTexto[250];
+    char strBusca[50];
+    int posicoes[30];
+    int i;
+
+    for (i = 0; i < 30; i++)
+    {
+        posicoes[i] = -1;
+    }
+
+    strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
+    strcpy(strBusca, "rato");
+    printf("%d\n", q4(strTexto, strBusca, posicoes) == 2);
+    printf("%d\n", posicoes[0] == 5);
+    printf("%d\n", posicoes[1] == 8);
+    printf("%d\n", posicoes[2] == 34);
+    printf("%d\n", posicoes[3] == 37);
 }

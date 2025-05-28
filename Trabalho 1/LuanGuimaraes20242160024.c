@@ -92,10 +92,66 @@ int teste(int a)
 
 int q1(char data[])
 {
-  int datavalida = 1;
+   int datavalida = 0;
+   int anoBissexto = 0;
 
   //quebrar a string data em strings sDia, sMes, sAno
 
+   char sDia[3];
+   char sMes[3];
+   char sAno[5];
+
+   int i = 0;
+   int j = 0;
+
+   for (j = 0; data[i] != '/' && data[i] != '\0'; i++, j++)
+   {
+      sDia[j] = data[i];
+   }
+   sDia[j] = '\0';
+
+   i++;
+
+   for (j = 0; data[i] != '/' && data[i] != '\0'; i++, j++)
+   {
+      sMes[j] = data[i];
+   }
+   sMes[j] = '\0';
+
+   i++;
+   for (j = 0; data[i] != '/' && data[i] != '\0'; i++, j++)
+   {
+      sAno[j] = data[i];
+   }
+   sAno[j] = '\0';
+
+   int dia = atoi(sDia);
+   int mes = atoi(sMes);
+   int ano = atoi(sAno); 
+
+   if (dia == 0 || dia > 31) datavalida = 0;
+   if (mes == 0) datavalida = 0;
+   if (ano == 0) datavalida = 0;
+
+   if (ano % 400 == 0 || (ano % 4 == 0 && ano % 100 != 0))
+   {
+      anoBissexto = 1;
+      if (anoBissexto && (dia > 0 && dia <= 29 && (mes == 2))) datavalida = 1;
+   }
+   else if (!anoBissexto)
+   {
+      if (!anoBissexto && (dia > 0 && dia <= 28 && (mes == 2))) datavalida = 1;
+   }
+   else
+   {
+      datavalida = 0;
+   }
+
+   if (sAno < 100) ano += 2000;
+
+   if (dia > 0 && dia <= 30 && (mes == 4 || mes == 6 || mes == 9 || mes == 11)) datavalida = 1;
+
+   if (dia > 0 && dia <= 31 && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)) datavalida = 1;
 
   //printf("%s\n", data);
 
@@ -159,9 +215,74 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
 
-    return qtdOcorrencias;
+   char formatedtexto[250];
+
+   int sizetexto = strlen(texto), sizeFormated, qtdOcorrencias;
+
+   qtdOcorrencias = -1;
+   
+   for (int i = 0; i < sizetexto; i++)
+   {
+      if(texto[i] == -61)
+      {
+         formatedtexto[i] == " ";
+      }
+      else
+      {
+         formatedtexto[i] = texto[i];
+      }
+   }
+
+   sizeFormated = strlen(formatedtexto);
+
+   //minúsculo = range(97, 122)
+   //maiúsculo = range(65, 90)
+   // +32, -32
+   // 1 = diferenciar caracteres, 0 = não diferenciar caracteres
+
+   if (isCaseSensitive == 0)
+   {
+      qtdOcorrencias = 0;
+
+      for (int i = 0; i < sizeFormated; i++)
+      {
+         if (c == formatedtexto[i])
+         {
+               qtdOcorrencias++;
+         }
+         else continue;
+      }
+
+      for (int i = 0; i < sizeFormated; i++)
+      {
+         if (formatedtexto[i] >= 97 && formatedtexto[i] <= 122)
+         {
+               formatedtexto[i] = formatedtexto[i] - 32;
+               if (c == formatedtexto[i]) qtdOcorrencias++;
+         }
+         else if (formatedtexto[i] >= 65 && formatedtexto[i] <= 90)
+         {
+               formatedtexto[i] = formatedtexto[i] + 32;
+               if (c == formatedtexto[i]) qtdOcorrencias++;
+         }
+      } 
+   }
+
+   if (isCaseSensitive == 1) //compara somente com a original
+   {
+      qtdOcorrencias = 0;
+
+      for (int i = 0; i < sizeFormated; i++)
+      {
+         if (c == formatedtexto[i])
+         {
+               qtdOcorrencias++;
+         }
+      }
+   }
+
+   return qtdOcorrencias;
 }
 
 /*
@@ -181,9 +302,58 @@ int q3(char *texto, char c, int isCaseSensitive)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+   char strFormated[250];
+   int sizeTexto = strlen(strTexto), sizeBusca = strlen(strBusca), sizeFormated;
+   int s, k, j, find, qtdOcorrencias, firstPosition;
 
-    return qtdOcorrencias;
+   qtdOcorrencias = 0;
+
+   s = 0;
+   for (int i = 0; i < sizeTexto; i++)
+   {
+      if(strTexto[i] != -61) //tirando o espaço vazio
+      {
+         strFormated[s] = strTexto[i];
+         s++;
+      }
+   }
+   strFormated[s] = '\0';
+
+   sizeFormated = strlen(strFormated);
+
+   k = 0;
+
+   for (int i = 0; i < sizeFormated; i++)
+   {
+      j = 1;
+      find = 0;
+
+      if (strBusca[0] == strFormated[i])
+      {
+         firstPosition = i;
+         
+         for (int x = i+1; x < sizeFormated; x++)
+         {
+               if (strBusca[j] == strFormated[x])
+               {
+                  j++;
+                  if (j == sizeBusca)
+                  {
+                     posicoes[k] = firstPosition+1;
+                     k++;
+                     posicoes[k] = x+1;
+                     k++;
+                  }
+               }
+               else break;
+         }
+      }
+
+      if (j == sizeBusca) find = 1;
+      if (find) qtdOcorrencias++;
+   }
+
+   return qtdOcorrencias;
 }
 
 /*
@@ -198,8 +368,39 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+   int calcSize, numberSize, multp, invertedNumber, divBase;
 
-    return num;
+   numberSize = 1;
+   multp = 1;
+   calcSize = num;
+
+   if (num < 0) num *= -1;
+
+   do
+   {
+      calcSize /= 10;
+      if (calcSize > 0) numberSize++;
+   }
+   while (calcSize != 0);
+
+   for (int i = 1; i < numberSize; i++)
+   {
+      multp *= 10;
+   }
+
+   divBase = 1;
+   invertedNumber = 0;
+
+   for (int i = 0; i < numberSize; i++)
+   {
+      invertedNumber += (((num / divBase) % 10) * multp);
+      divBase *= 10;
+      multp = multp / 10;
+   }
+
+   num = invertedNumber;
+
+   return num;
 }
 
 /*
@@ -214,8 +415,51 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
-    return qtdOcorrencias;
+   int qtdOcorrencias;
+
+   int calc = numerobase; 
+   int calcBusca = numerobusca, calcBase = numerobase;
+   int sizeBusca = 1, sizeBase = 1;
+   int baseDecimal = 1;
+   int number = 1;
+
+   do
+   {
+      calcBusca /= 10;
+      if (calcBusca > 0) sizeBusca++;
+   } while (calcBusca != 0);
+
+   do
+   {
+      calcBase /= 10;
+      if (sizeBase > 0) sizeBase++;
+   } while (calcBase != 0);
+
+   for (int i = 0; i < sizeBusca; i++)
+   {
+      baseDecimal *= 10;
+   }
+
+   qtdOcorrencias = 0;
+
+   // printf("\nprev calc = %d\n", calc);
+
+
+
+   for (int i = 0; calc != 0; i++)
+   {
+      number = (calc % baseDecimal);
+      calc /= 10;
+      // printf("\nnumber = %d\n", number);
+      // printf("\ncalc = %d\n", calc);
+      if (number == numerobusca) qtdOcorrencias++;
+   }
+
+   
+
+   // printf("\nocorrencias: %d\n", qtdOcorrencias);
+
+   return qtdOcorrencias;
 }
 
 /*

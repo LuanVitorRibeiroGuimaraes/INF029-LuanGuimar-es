@@ -34,13 +34,13 @@ int main()
 {
     //testSomar();
     //testFatorial();
-    testQ1();
-    testQ2();
-    testQ3();
-    testQ4();
-    testQ5();
+    // testQ1();
+    // testQ2();
+    // testQ3();
+    // testQ4();
+    // testQ5();
     testQ6();
-    testQ7();
+    // testQ7();
 }
 
 void testSomar()
@@ -65,16 +65,16 @@ void testFatorial()
 void testQ1()
 {
     char str[11];
-    strcpy(str, "29/02/2015");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "29/02/2012");
+    strcpy(str, "29/02/2015"); //error
+    printf("%d\n", q1(str) == 0); 
+    strcpy(str, "29/02/2012"); //pass
     printf("%d\n", q1(str) == 1);
-    strcpy(str, "9/13/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "45/4/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "/9/2014");
-    printf("%d\n", q1(str) == 0);
+    strcpy(str, "9/13/2014"); //error
+    printf("%d\n", q1(str) == 0); 
+    strcpy(str, "45/4/2014"); //pass
+    printf("%d\n", q1(str) == 0); 
+    strcpy(str, "/9/2014"); //pass
+    printf("%d\n", q1(str) == 0); 
 }
 
 void testQ2()
@@ -184,10 +184,16 @@ void testQ5()
 
 void testQ6()
 {
-    printf("%d\n", q6(34567368, 3) == 2);
-    printf("%d\n", q6(34567368, 4576) == 0);
-    printf("%d\n", q6(3539343, 3) == 4);
-    printf("%d\n", q6(3539343, 39) == 1);
+    printf("%d\n",q6(34567368, 3) == 2);
+    printf("%d\n",q6(34567368, 4576) == 0);
+    printf("%d\n",q6(3539343, 3) == 4);
+    printf("%d\n",q6(3539343, 39) == 1);
+    printf("%d\n",q6(5444, 44) == 1);
+    printf("%d\n",q6(54444, 44) == 2);
+    printf("%d\n",q6(1234562354, 23) == 2);
+    printf("%d\n",q6(1234, 13) == 0);
+    printf("%d\n",q6(544444, 4) == 5);
+    printf("%d\n",q6(1234562354, 32) == 0);
 }
 
 void testQ7()

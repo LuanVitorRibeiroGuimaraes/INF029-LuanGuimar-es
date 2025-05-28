@@ -1,36 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void invertNumber(int n)
+int q5(int num)
 {
-    int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
-    n1 = n / 1000; //ok
-    n2 = (n % 1000) / 100; //ok
-    n3 = (n % 100) / 10; //ok
-    n4 = n % 10; //ok
+    int calcSize, numberSize, multp, invertedNumber, divBase;
 
-    if (n < 10)
+    numberSize = 1;
+    multp = 1;
+    calcSize = num;
+
+    if (num < 0) num *= -1;
+
+    do
     {
-        return printf("\n%d", n4);
+        calcSize /= 10;
+        if (calcSize > 0) numberSize++;
+    }
+    while (calcSize != 0);
+
+    for (int i = 1; i < numberSize; i++)
+    {
+        multp *= 10;
     }
 
-    if (n < 100)
+    divBase = 1;
+    invertedNumber = 0;
+
+    for (int i = 0; i < numberSize; i++)
     {
-        return printf("\n%d%d", n4, n3);
+        invertedNumber += (((num / divBase) % 10) * multp);
+        divBase *= 10;
+        multp = multp / 10;
     }
 
-    if (n < 1000)
-    {
-        return printf("\n%d%d%d", n4, n3, n2);
-    }
+    num = invertedNumber;
 
-    return printf("\n%d%d%d%d", n4, n3, n2, n1);
-}
-
-int main()
-{
-    invertNumber(543);
-    invertNumber(78);
-    invertNumber(3);
-    invertNumber(345);
+    return num;
 }

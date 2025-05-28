@@ -2,25 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 
-void findLetter(char text[], char word[], int isCaseSensitive)
-{
-    char formatedText[250];
+//texto[] = *texto
 
-    int sizeText = strlen(text), sizeFormated, qnt;
+int q3(char *texto, char c, int isCaseSensitive)
+{
+    char formatedtexto[250];
+
+    int sizetexto = strlen(texto), sizeFormated, qtdOcorrencias;
+
+    qtdOcorrencias = -1;
     
-    for (int i = 0; i < sizeText; i++)
+    for (int i = 0; i < sizetexto; i++)
     {
-        if(text[i] == -61)
+        if(texto[i] == -61)
         {
-            formatedText[i] == " ";
+            formatedtexto[i] == " ";
         }
         else
         {
-            formatedText[i] = text[i];
+            formatedtexto[i] = texto[i];
         }
     }
 
-    sizeFormated = strlen(formatedText);
+    sizeFormated = strlen(formatedtexto);
 
     //minúsculo = range(97, 122)
     //maiúsculo = range(65, 90)
@@ -29,53 +33,58 @@ void findLetter(char text[], char word[], int isCaseSensitive)
 
     if (isCaseSensitive == 0)
     {
-        qnt = 0;
+        qtdOcorrencias = 0;
 
         for (int i = 0; i < sizeFormated; i++)
         {
-            if (word[0] == formatedText[i])
+            if (c == formatedtexto[i])
             {
-                qnt++;
+                qtdOcorrencias++;
             }
             else continue;
         }
 
         for (int i = 0; i < sizeFormated; i++)
         {
-            if (formatedText[i] >= 97 && formatedText[i] <= 122)
+            if (formatedtexto[i] >= 97 && formatedtexto[i] <= 122)
             {
-                formatedText[i] = formatedText[i] - 32;
-                if (word[0] == formatedText[i]) qnt++;
+                formatedtexto[i] = formatedtexto[i] - 32;
+                if (c == formatedtexto[i]) qtdOcorrencias++;
             }
-            else if (formatedText[i] >= 65 && formatedText[i] <= 90)
+            else if (formatedtexto[i] >= 65 && formatedtexto[i] <= 90)
             {
-                formatedText[i] = formatedText[i] + 32;
-                if (word[0] == formatedText[i]) qnt++;
+                formatedtexto[i] = formatedtexto[i] + 32;
+                if (c == formatedtexto[i]) qtdOcorrencias++;
             }
         } 
     }
 
     if (isCaseSensitive == 1) //compara somente com a original
     {
-        qnt = 0;
+        qtdOcorrencias = 0;
 
         for (int i = 0; i < sizeFormated; i++)
         {
-            if (word[0] == formatedText[i])
+            if (c == formatedtexto[i])
             {
-                qnt++;
+                qtdOcorrencias++;
             }
         }
     }
 
-    printf("\nletter: %c, times: %d", word[0], qnt);
+
+    printf("\nletter: %c, times: %d", c, qtdOcorrencias);
+
+    return qtdOcorrencias;
 }
 
 int main()
 {
-    findLetter("Renato Lima Novais", "a", 0);
-    findLetter("Renato Lima Novais", "b", 0);
-    findLetter("Renato Lima Novais", "l", 1);
-    findLetter("Renato Lima Novais", "l", 0);
-    findLetter("Renato Lima Novais", "L", 0);
+    char str[250];
+    strcpy(str, "Renato Lima Novais");
+    q3(str, 'a', 0);
+    q3(str, 'b', 0);
+    q3(str, 'l', 1);
+    q3(str, 'l', 0);
+    q3(str, 'L', 0);
 }
