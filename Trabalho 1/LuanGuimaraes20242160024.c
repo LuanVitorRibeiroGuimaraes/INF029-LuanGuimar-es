@@ -177,31 +177,50 @@ int q1(char data[])
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
-DiasMesesAnos q2(char datainicial[], char datafinal[])
-{
+DiasMesesAnos q2(char datainicial[], char datafinal[]) {
+   DiasMesesAnos dma;
 
-    //calcule os dados e armazene nas três variáveis a seguir
-    DiasMesesAnos dma;
-
-    if (q1(datainicial) == 0){
+   if (!q1(datainicial)) {
       dma.retorno = 2;
       return dma;
-    }else if (q1(datafinal) == 0){
+   }
+
+   if (!q1(datafinal)) {
       dma.retorno = 3;
       return dma;
-    }else{
-      //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+   }
 
+   int d1, m1, a1, d2, m2, a2;
+   sscanf(datainicial, "%d/%d/%d", &d1, &m1, &a1);
+   sscanf(datafinal, "%d/%d/%d", &d2, &m2, &a2);
 
-      //se tudo der certo
-      dma.retorno = 1;
+   if (a2 < a1 || (a2 == a1 && m2 < m1) || (a2 == a1 && m2 == m1 && d2 < d1)) {
+      dma.retorno = 4;
       return dma;
-      
-    }
-    
+   }
+
+   int dia = d2 - d1;
+   int mes = m2 - m1;
+   int ano = a2 - a1;
+
+   if (dia < 0) {
+      dia += 30;
+      mes--;
+   }
+
+   if (mes < 0) {
+      mes += 12;
+      ano--;
+   }
+
+   dma.qtdDias = dia;
+   dma.qtdMeses = mes;
+   dma.qtdAnos = ano;
+   dma.retorno = 1;
+
+   return dma;
 }
+
 
 /*
  Q3 = encontrar caracter em texto
@@ -415,7 +434,7 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-   int qtdOcorrencias;
+   int qtdOcorrencias = 0;
 
    int calc = numerobase; 
    int calcBusca = numerobusca, calcBase = numerobase;
@@ -440,24 +459,12 @@ int q6(int numerobase, int numerobusca)
       baseDecimal *= 10;
    }
 
-   qtdOcorrencias = 0;
-
-   // printf("\nprev calc = %d\n", calc);
-
-
-
    for (int i = 0; calc != 0; i++)
    {
       number = (calc % baseDecimal);
       calc /= 10;
-      // printf("\nnumber = %d\n", number);
-      // printf("\ncalc = %d\n", calc);
       if (number == numerobusca) qtdOcorrencias++;
    }
-
-   
-
-   // printf("\nocorrencias: %d\n", qtdOcorrencias);
 
    return qtdOcorrencias;
 }
@@ -474,66 +481,33 @@ int q6(int numerobase, int numerobusca)
 
  int q7(char matriz[8][10], char palavra[5])
  {
-     int achou;
-     return achou;
+   int linhas = 8;
+   int colunas = 10;
+   int len = strlen(palavra);
+
+   int dx[8] = {  0,  0,  1, -1,  1, -1,  1, -1 };
+   int dy[8] = {  1, -1,  0,  0,  1, -1, -1,  1 };
+
+   for (int i = 0; i < linhas; i++) {
+      for (int j = 0; j < colunas; j++) {
+         for (int dir = 0; dir < 8; dir++) {
+               int k, x = i, y = j;
+
+               for (k = 0; k < len; k++) {
+                  if (x < 0 || x >= linhas || y < 0 || y >= colunas)
+                     break;
+                  if (matriz[x][y] != palavra[k])
+                     break;
+                  
+                  x += dx[dir];
+                  y += dy[dir];
+               }
+
+               if (k == len)
+                  return 1;
+         }
+      }
+   }
+
+   return 0; // Palavra não encontrada
  }
-
-
-
-DataQuebrada quebraData(char data[]){
-  DataQuebrada dq;
-  char sDia[3];
-	char sMes[3];
-	char sAno[5];
-	int i; 
-
-	for (i = 0; data[i] != '/'; i++){
-		sDia[i] = data[i];	
-	}
-	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
-		sDia[i] = '\0';  // coloca o barra zero no final
-	}else {
-		dq.valido = 0;
-    return dq;
-  }  
-	
-
-	int j = i + 1; //anda 1 cada para pular a barra
-	i = 0;
-
-	for (; data[j] != '/'; j++){
-		sMes[i] = data[j];
-		i++;
-	}
-
-	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
-		sMes[i] = '\0';  // coloca o barra zero no final
-	}else {
-		dq.valido = 0;
-    return dq;
-  }
-	
-
-	j = j + 1; //anda 1 cada para pular a barra
-	i = 0;
-	
-	for(; data[j] != '\0'; j++){
-	 	sAno[i] = data[j];
-	 	i++;
-	}
-
-	if(i == 2 || i == 4){ // testa se tem 2 ou 4 digitos
-		sAno[i] = '\0';  // coloca o barra zero no final
-	}else {
-		dq.valido = 0;
-    return dq;
-  }
-
-  dq.iDia = atoi(sDia);
-  dq.iMes = atoi(sMes);
-  dq.iAno = atoi(sAno); 
-
-	dq.valido = 1;
-    
-  return dq;
-}
