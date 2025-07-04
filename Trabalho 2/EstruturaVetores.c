@@ -6,6 +6,7 @@
 
 typedef struct EstruturaVetores
 {
+    int ocupado;
     int * vetor;
     int tamanho;
     int qtdElementos;
@@ -30,7 +31,7 @@ int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
     int retorno = 0;
     // a posicao pode já existir estrutura auxiliar
-    if(estrutura.vetor[posicao] != NULL) {
+    if(vetorPrincipal[posicao].ocupado == 1) {
         retorno = JA_TEM_ESTRUTURA_AUXILIAR;
         return retorno;
     }
@@ -55,6 +56,7 @@ int criarEstruturaAuxiliar(int posicao, int tamanho)
     // deu tudo certo, crie
     vetorPrincipal[posicao].tamanho = tamanho; //define o tamanho
     vetorPrincipal[posicao].qtdElementos = 0; //começa com 0 elementos
+    vetorPrincipal[posicao].ocupado = 1;
     retorno = SUCESSO;
 
     return retorno;
@@ -76,7 +78,7 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
     int temEspaco = 0;
     int posicao_invalida = 0;
 
-    if(estrutura.vetor[posicao] == NULL) {
+    if(vetorPrincipal[posicao].ocupado == 1) {
         retorno = POSICAO_INVALIDA;
     }
     else
@@ -87,9 +89,9 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
             if (temEspaco)
             {
                 //insere
-                if (estrutura.estruturaAuxiliar[posicao] < 10 && estrutura.estruturaAuxiliar[posicao] == NULL) { //valida a posição
-                    estrutura.estruturaAuxiliar[posicao] = valor;
-
+                if (vetorPrincipal[posicao].ocupado == 1) { //valida a posição
+                    vetorPrincipal[posicao].vetor[posicao] = valor;
+                    vetorPrincipal[posicao].qtdElementos += 1;
                 }
             }
             else
