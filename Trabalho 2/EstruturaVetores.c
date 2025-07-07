@@ -229,6 +229,19 @@ int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
         return retorno;
     }
 
+    if(vetorPrincipal[posicao].vetor == NULL) {
+        int retorno = SEM_ESTRUTURA_AUXILIAR;
+        return retorno;
+    }
+
+    for(int i = 0; vetorPrincipal[posicao].qtdElementos; i++) {
+        vetorAux[i] = vetorPrincipal[posicao].vetor[i];
+    }
+
+    for(int i = 0; i < vetorPrincipal[posicao].qtdElementos; i++) {
+        printf("[%d]", vetorAux[i]);
+    }
+
     int retorno = 0;
 
     return retorno;
