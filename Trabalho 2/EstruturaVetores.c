@@ -78,9 +78,12 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
     int temEspaco = 0;
     int posicao_invalida = 0;
 
-    if(vetorPrincipal[posicao].ocupado == 1) {
-        retorno = POSICAO_INVALIDA;
+    if (vetorPrincipal[posicao].ocupado == 1) {
+        posicao_invalida = 1;
     }
+    
+    if (posicao_invalida)
+        retorno = POSICAO_INVALIDA;
     else
     {
         // testar se existe a estrutura auxiliar
@@ -88,11 +91,8 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
         {
             if (temEspaco)
             {
-                //insere
-                if (vetorPrincipal[posicao].ocupado == 1) { //valida a posição
-                    vetorPrincipal[posicao].vetor[posicao] = valor;
-                    vetorPrincipal[posicao].qtdElementos += 1;
-                }
+                vetorPrincipal[posicao].vetor[posicao] = valor;
+                retorno = SUCESSO;
             }
             else
             {
