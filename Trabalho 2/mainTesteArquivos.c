@@ -22,15 +22,15 @@ int main()
     inicializar();
     //testarArquivoPrimeiraVez();
     testarArquivoSegundaVez();
-    /*testeInserirSemNada();
+    testeInserirSemNada();
     testeCriarEstrutura();
-    testeInserirComEstrutura();
-    testeExcluir();
-    testeExcluirNumeroEspecifico();
-    testeListar();
-    testeRetornarTodosNumeros();
-    testeMudarTamanhoEstrutura();
-    testeListaEncadeada();*/
+    // testeInserirComEstrutura();
+    // testeExcluir();
+    // testeExcluirNumeroEspecifico();
+    // testeListar();
+    // testeRetornarTodosNumeros();
+    // testeMudarTamanhoEstrutura();
+    // testeListaEncadeada();
     finalizar();
 }
 int ligado = 0;

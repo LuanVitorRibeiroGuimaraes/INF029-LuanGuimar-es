@@ -6,7 +6,6 @@
 
 typedef struct EstruturaVetores
 {
-    int ocupado;
     int * vetor;
     int tamanho;
     int qtdElementos;
@@ -31,7 +30,7 @@ int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
     int retorno = 0;
     // a posicao pode já existir estrutura auxiliar
-    if(vetorPrincipal[posicao].ocupado == 1) {
+    if(vetorPrincipal[posicao].vetor != NULL) {
         retorno = JA_TEM_ESTRUTURA_AUXILIAR;
         return retorno;
     }
@@ -56,7 +55,6 @@ int criarEstruturaAuxiliar(int posicao, int tamanho)
     // deu tudo certo, crie
     vetorPrincipal[posicao].tamanho = tamanho; //define o tamanho
     vetorPrincipal[posicao].qtdElementos = 0; //começa com 0 elementos
-    vetorPrincipal[posicao].ocupado = 1;
     retorno = SUCESSO;
 
     return retorno;
@@ -78,21 +76,32 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
     int temEspaco = 0;
     int posicao_invalida = 0;
 
-    if(vetorPrincipal[posicao].ocupado == 1) {
+    if (posicao < 0 || posicao >= TAM) {
+        posicao_invalida = 1;
+    }
+
+    if(posicao_invalida) {
         retorno = POSICAO_INVALIDA;
     }
     else
     {
         // testar se existe a estrutura auxiliar
+        if(vetorPrincipal[posicao].vetor != NULL) {
+            existeEstruturaAuxiliar = 1;
+        }
         if (existeEstruturaAuxiliar)
         {
+            if (vetorPrincipal[posicao].vetor != NULL) {
+                if (vetorPrincipal[posicao].qtdElementos < vetorPrincipal[posicao].tamanho) {
+                    temEspaco = 1;
+                }
+            }
             if (temEspaco)
             {
                 //insere
-                if (vetorPrincipal[posicao].ocupado == 1) { //valida a posição
-                    vetorPrincipal[posicao].vetor[posicao] = valor;
-                    vetorPrincipal[posicao].qtdElementos += 1;
-                }
+                vetorPrincipal[posicao].vetor[vetorPrincipal[posicao].qtdElementos] = valor;
+                vetorPrincipal[posicao].qtdElementos += 1;
+                retorno = SUCESSO;
             }
             else
             {
@@ -121,6 +130,27 @@ Rertono (int)
 */
 int excluirNumeroDoFinaldaEstrutura(int posicao)
 {
+    //validar a posição
+    //validar se tem vetor na posição
+
+    if (posicao < 1 || posicao > 10) {
+        int retorno = POSICAO_INVALIDA;
+        return retorno;
+    }
+
+    if (vetorPrincipal[posicao].vetor == NULL) {
+        int retorno = SEM_ESTRUTURA_AUXILIAR;
+        return retorno;
+    }
+    
+    if (vetorPrincipal[posicao].qtdElementos < 0) {
+        int retorno = ESTRUTURA_AUXILIAR_VAZIA;
+        return retorno;
+    }
+
+    vetorPrincipal[posicao].vetor[vetorPrincipal[posicao].qtdElementos - 1] = NULL;
+    vetorPrincipal[posicao].qtdElementos -= 1;
+    
     int retorno = SUCESSO;
     return retorno;
 }
@@ -140,6 +170,32 @@ Rertono (int)
 */
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor)
 {
+
+    if(posicao < 1 || posicao > 10) {
+        int retorno = POSICAO_INVALIDA;
+        return retorno;
+    }
+
+    if(vetorPrincipal[posicao].vetor == NULL) {
+        int retorno = ESTRUTURA_AUXILIAR_VAZIA;
+        return retorno;
+    }
+
+    if(vetorPrincipal[posicao].qtdElementos == 0) {
+        int retorno = ESTRUTURA_AUXILIAR_VAZIA;
+        return retorno;
+    }
+
+    for(int i = 0; i < vetorPrincipal[posicao].qtdElementos; i++) {
+        if (vetorPrincipal[posicao].vetor[i] == valor) {
+            vetorPrincipal[posicao].vetor[i] = NULL;
+        }
+        else {
+            int retorno = NUMERO_INEXISTENTE;
+            return retorno;
+        }
+    }
+
     int retorno = SUCESSO;
     return retorno;
 }
@@ -168,6 +224,10 @@ Retorno (int)
 */
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
+    if(!ehPosicaoValida) {
+        int retorno = POSICAO_INVALIDA;
+        return retorno;
+    }
 
     int retorno = 0;
 
