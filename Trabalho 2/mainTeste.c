@@ -17,17 +17,17 @@ void testeListaEncadeada();
 
 int main()
 {
-    inicializar();
-    testeInserirSemNada();
-    /*testeCriarEstrutura();
-    testeInserirComEstrutura();
-    testeExcluir();
-    testeExcluirNumeroEspecifico();
-    testeListar();
-    testeRetornarTodosNumeros();
-    testeMudarTamanhoEstrutura();
-    testeListaEncadeada();*/
-    finalizar();
+    inicializar(); //ok
+    testeInserirSemNada(); //ok
+    testeCriarEstrutura(); //ok
+    testeInserirComEstrutura(); //ok
+    testeExcluir(); //ok
+    testeExcluirNumeroEspecifico(); //ok
+    testeListar();//ok
+    testeRetornarTodosNumeros();//ok
+    testeMudarTamanhoEstrutura(); //ok
+    testeListaEncadeada(); //ok
+    finalizar(); //ok
 }
 int ligado = 0;
 void show_log(char *str)
@@ -108,8 +108,8 @@ void testeListar()
 {
     show_log("testeListar()");
     //###  int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]); ###
-    printf("%d\n", inserirNumeroEmEstrutura(2, 7) == SUCESSO);
-    printf("%d\n", inserirNumeroEmEstrutura(2, -9) == SUCESSO);
+    printf(" %d\n", inserirNumeroEmEstrutura(2, 7) == SUCESSO);
+    printf(" %d\n", inserirNumeroEmEstrutura(2, -9) == SUCESSO);
 
     int vet[2];
 

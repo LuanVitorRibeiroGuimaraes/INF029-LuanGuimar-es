@@ -19,11 +19,11 @@ void testarArquivoSegundaVez();
 
 int main()
 {
-    inicializar();
+    // inicializar();
     //testarArquivoPrimeiraVez();
-    testarArquivoSegundaVez();
-    testeInserirSemNada();
-    testeCriarEstrutura();
+    // testarArquivoSegundaVez();
+    // testeInserirSemNada();
+    // testeCriarEstrutura(); 
     // testeInserirComEstrutura();
     // testeExcluir();
     // testeExcluirNumeroEspecifico();
@@ -31,7 +31,7 @@ int main()
     // testeRetornarTodosNumeros();
     // testeMudarTamanhoEstrutura();
     // testeListaEncadeada();
-    finalizar();
+    // finalizar();
 }
 int ligado = 0;
 void show_log(char *str)
